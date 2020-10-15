@@ -1,0 +1,58 @@
+{
+	"variables": {
+		"project": "",
+		"nodeRole": "",
+		"imageBase": "",
+		"imageName": "",
+		"imageVersion": ""
+	},
+	"builders": [
+		{
+			"type": "docker",
+			"image": "{{user `imageBase`}}",
+			"commit": true,
+			"run_command": ["-d", "--network=puppet", "-i", "-t", "--entrypoint=/bin/sh", "--", "{{.Image}}"],
+			"pull": false,
+			"changes": [
+				"EXPOSE 3306",
+				"ENTRYPOINT [\"\"]",
+				"CMD [\"/usr/sbin/mysqld\", \"--basedir=/usr\"]"
+			]
+		}
+	],
+	"provisioners": [
+		{
+			"type": "shell",
+			"inline": [
+				"curl -k -s -S -X DELETE -H 'Accept: pson' https://puppet:8140/puppet-ca/v1/certificate_status/{{user `imageName`}}"
+			]
+		},
+		{
+			"type": "puppet-server",
+			"extra_arguments": "--test",
+			"puppet_bin_dir": "/opt/puppetlabs/puppet/bin/",
+			"puppet_server": "puppet",
+			"puppet_node": "{{user `imageName`}}",
+			"prevent_sudo": true,
+			"facter": {
+				"role": "{{user `nodeRole`}}",
+				"project": "{{user `project`}}"
+			}
+		},
+		{
+			"type": "shell",
+			"inline": [
+				"rm -r /etc/puppetlabs/puppet/ssl"
+			]
+		}
+	],
+	"post-processors": [
+		[
+			{
+				"type": "docker-tag",
+				"repository": "{{user `imageName`}}",
+				"tags": ["{{user `imageVersion`}}", "latest"]
+			}
+		]
+	]
+}

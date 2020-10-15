@@ -1,0 +1,6 @@
+{
+	"imageBase": "apache-base-ubuntu2004:latest",
+	"imageName": "demo-app1-apache",
+	"nodeRole": "demo_app1_apache",
+	"project": "demo"
+}

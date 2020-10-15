@@ -1,0 +1,5 @@
+{
+	"imageBase": "ubuntu:20.04",
+	"imageName": "puppet-base-ubuntu2004",
+	"nodeRole": "base"
+}

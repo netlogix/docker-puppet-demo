@@ -1,0 +1,5 @@
+{
+	"imageBase": "puppet-base-ubuntu2004:latest",
+	"imageName": "apache-base-ubuntu2004",
+	"nodeRole": "apache_base"
+}

@@ -1,0 +1,5 @@
+{
+	"imageBase": "puppet-base-ubuntu2004:latest",
+	"imageName": "mariadb-base-ubuntu2004",
+	"nodeRole": "mariadb"
+}

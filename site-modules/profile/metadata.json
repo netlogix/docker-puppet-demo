@@ -1,0 +1,13 @@
+{
+	"name": "profile",
+	"version": "0.0.0",
+	"author": "netlogix GmbH & Co. KG",
+	"license": "proprietary",
+	"summary": "Profiles",
+	"source": "",
+	"dependencies": [
+		{ "name": "puppetlabs-apache" },
+		{ "name": "puppetlabs-mysql" },
+		{ "name": "puppet-php" }
+	]
+}

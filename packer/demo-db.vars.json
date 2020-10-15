@@ -1,0 +1,6 @@
+{
+	"imageBase": "mariadb-base-ubuntu2004:latest",
+	"imageName": "demo-db",
+	"nodeRole": "mariadb",
+	"project": "demo"
+}

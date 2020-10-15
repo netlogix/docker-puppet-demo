@@ -1,0 +1,15 @@
+---
+version: 5
+
+defaults:
+  datadir: "data"
+
+hierarchy:
+  - name: "Yaml backend"
+    data_hash: yaml_data
+    paths:
+      - "nodes/%{trusted.certname}.yaml"
+      - "projects/%{facts.project}/%{facts.role}/%{facts.stage}.yaml"
+      - "projects/%{facts.project}/%{facts.role}.yaml"
+      - "projects/%{facts.project}.yaml"
+      - "common.yaml"

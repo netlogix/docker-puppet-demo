@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  puppet:
+    hostname: puppet
+    image: puppet/puppetserver:latest
+    volumes:
+      - .:/etc/puppetlabs/code/environments/production:ro
+      - ./docker/puppet/docker-custom-entrypoint.d:/docker-custom-entrypoint.d:ro
+    environment:
+      - PUPPETSERVER_HOSTNAME=puppet
+  puppetdb:
+    hostname: puppetdb
+    image: puppet/puppetdb:latest
+    depends_on:
+      - postgres
+      - puppet
+  postgres:
+    image: postgres:9.6
+    hostname: postgres
+    environment:
+      - POSTGRES_PASSWORD=puppetdb
+      - POSTGRES_USER=puppetdb
+      - POSTGRES_DB=puppetdb
+  packer:
+    build:
+      context: docker/packer
+      args:
+        PACKER_VERSION: latest
+    volumes:
+      - ./packer:/mnt/packer:ro
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+    working_dir: /mnt
+    depends_on:
+      - puppet
+      - puppetdb
+
+networks:
+  default:
+    # FIXME we need a fixed name to be able to have packer place the container in the same network.
+    #       Preferably, we would be able to use this network in packer without a fixed name.
+    name: puppet
+    ipam:
+      config:
+        - subnet: 172.24.252.0/24

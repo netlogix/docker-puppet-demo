@@ -1,0 +1,11 @@
+{
+	"name": "role",
+	"version": "0.0.0",
+	"author": "netlogix GmbH & Co. KG",
+	"license": "proprietary",
+	"summary": "Roles",
+	"source": "",
+	"dependencies": [
+		{ "name": "profile" }
+	]
+}
