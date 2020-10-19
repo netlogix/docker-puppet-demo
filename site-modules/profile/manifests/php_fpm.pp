@@ -29,6 +29,7 @@ class profile::php_fpm {
 
 	class { 'php':
 		manage_repos => false,
+		composer => false,
 		fpm => true,
 		dev => false,
 		settings => $fpm_ini_settings,
